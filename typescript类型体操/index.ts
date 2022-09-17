@@ -37,11 +37,46 @@ let number: isNumber<1>
 // ?ts操作对象
 // 通过 keyof 取出 obj 的所有属性名，通过 in 遍历属性名并取对应的属性值，通过这些来生成新的对象类型 newObj。
 // 我们过了一下常用的 ts 类型的语法，包括条件判断、循环（用递归实现）、字符串操作（构造字符串、取某部分子串）、对象操作（构造对象、取属性值）。接下来就用这些来做操吧。
-const foo = {
-    name: 123,
-    test: '456'
+// const foo = {
+//     name: 123,
+//     test: '456'
+// }
+
+// type Foo<O> = {
+//     [key in keyof O]: O[key]  
+// }
+
+// type Foo = keyof typeof foo
+
+
+// ?函数return怎么实现返回值推导
+// function bar(params: string) {
+//     return params
+// }
+
+// function foo<F>(Fn:F) {
+//     return 
+// }
+
+// const newBar = foo(bar)
+
+
+// ?ts测试
+// type Foo = 'aaa' extends `${infer str}` ? str : never
+
+// type TestInfer<S> = S extends `${infer L},${infer R}` ? `${R}-${L}` : S
+
+// let foo:TestInfer<'a,c'>
+
+// ?取出对象对应类型的值，把值组装成新的类型
+type test = {
+    a: 1,
+    b: '2',
+    c: 3
 }
 
-type Foo = {
-    [key in keyof typeof foo]: typeof foo[key]  
-}
+type filterNumberProp<O> = {
+    [key in keyof O]: O[key] extends number ? O[key] : never
+}[keyof O]
+
+let foo: filterNumberProp<test>  = 1
